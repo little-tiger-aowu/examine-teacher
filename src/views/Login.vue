@@ -1,27 +1,42 @@
 <template>
   <div class="login">
-    <el-card class="box-card">
-      <div class="title">
-        <!-- <el-link type="primary" href="/#/register" :underline="false">
-          去注册
-          <i class="el-icon-arrow-right"></i>
-        </el-link>-->
-      </div>
-      <div class="form-box">
-        <h3>登录</h3>
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
-          <el-form-item prop="username">
-            <el-input v-model="ruleForm.username" placeholder="用户名"></el-input>
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input placeholder="请输入密码" v-model="ruleForm.password" show-password></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button style="width:100%" type="primary" @click="submitForm('ruleForm')">登录</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </el-card>
+    <div class="logo">
+      <img src="@/assets/logo.png" />
+    </div>
+
+    <el-row class="login-box">
+      <el-col :xs="24" :sm="15" :md="16" :lg="17" :xl="18" v-show="!isMobile">
+        <div class="login-txt">
+          <img src="@/assets/login-txt.png" />
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="9" :md="8" :lg="7" :xl="6">
+        <div class="box-card">
+          <el-card>
+            <div class="form-box">
+              <div class="title-txt">
+                <div>
+                  <img src="@/assets/login-txt2.png" />
+                </div>
+                <!-- 登录 -->
+              </div>
+
+              <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+                <el-form-item prop="username">
+                  <el-input v-model="ruleForm.username" placeholder="用户名"></el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                  <el-input placeholder="请输入密码" v-model="ruleForm.password" show-password></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button style="width:100%" type="primary" @click="submitForm('ruleForm')">登录</el-button>
+                </el-form-item>
+              </el-form>
+            </div>
+          </el-card>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
@@ -70,23 +85,60 @@ export default {
 <style lang="scss" scoped>
 .login {
   background-color: #f5f5f5;
-  background: url(~@/assets/bg-1.png) 0% 0% / cover no-repeat;
-  height: 100vh;
-  display: flex;
-  display: -webkit-flex;
-  align-items: center;
-  justify-content: center;
+  background: url("~@/assets/login-background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0 5%;
+  .login-box {
+    max-width: 100%;
+    margin: 0 auto;
+  }
   .box-card {
-    width: 500px;
+    .el-card {
+      max-width: 100%;
+
+      width: 100%;
+      margin: 0 auto;
+    }
     .title {
       text-align: right;
     }
     .form-box {
-      padding: 20px;
-      h3 {
+      .title-txt {
         text-align: center;
+        padding-bottom: 15px;
+        img {
+          max-width: 70%;
+          padding-bottom: 30px;
+        }
       }
+    } 
+  }
+  .logo {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    img {
+      width: 90%;
     }
   }
+  .login-txt,
+  .box-card {
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  .login-txt {
+    padding-right: 20%;
+    div {
+      height: 100%;
+    }
+    img {
+      max-width: 50%;
+    }
+  }
+
 }
 </style>

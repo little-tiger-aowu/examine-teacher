@@ -2,15 +2,15 @@
   <div class="home">
     <div class="top-title">
       <el-row>
-        <el-col :span="8">
+        <el-col :span="4">
           <div class="logo">
             <img src="@/assets/logo.png" />
           </div>
         </el-col>
-        <el-col :span="8">
-          <h1>评审列表</h1>
+        <el-col :span="16">
+          <h1 style="text-align: center;">评审列表</h1>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="4">
           <!-- <p>
             <span>评审人：{{user.userName}}</span>
             <el-link type="primary" href="/#/login" :underline="false">退出</el-link>
@@ -64,7 +64,7 @@ export default {
     text-align: center;
     padding: 40px 0;
     .el-row {
-      max-width: 1000px;
+      // max-width: 1000px;
       margin: 0 auto;
     }
     .logo {
