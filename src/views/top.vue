@@ -3,12 +3,12 @@
     <div class="top-title">
       <el-row>
         <el-col :span="4">
-          <div class="logo">
+          <!-- <div class="logo">
             <img src="@/assets/logo.png" />
-          </div>
+          </div> -->
         </el-col>
-        <el-col :span="16">
-          <h1 style="text-align: center;">评审列表</h1>
+        <el-col :span="16" :offset="4">
+          <h1 style="text-align: center;padding-top:5%">评审列表</h1>
         </el-col>
         <el-col :span="4">
           <!-- <p>
@@ -59,13 +59,19 @@ export default {
 <style lang="scss" scoped>
 .home {
   .top-title {
-    background-color: #005fad;
+    // background-color: #005fad;
+    background-image: url(~@/assets/banner.jpg);
+    // background-size:auto 100% ;
+    background-position: center;
+    height: 150px;
     color: #ffffff;
     text-align: center;
     padding: 40px 0;
+    position: relative;
     .el-row {
       // max-width: 1000px;
       margin: 0 auto;
+      height: 100%;
     }
     .logo {
       img {
@@ -89,7 +95,7 @@ export default {
   }
   .header-buttom {
       position: absolute;
-      bottom: 0;
+      bottom: -20px;
       right: 25px;
       height: 30px;
       line-height: 27px;

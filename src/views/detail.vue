@@ -1,6 +1,11 @@
 <template>
   <div class="detail">
     <el-row :gutter="20" style="margin:20px">
+      <el-col :span="24">
+        <span @click="back" class="back">
+          <i class="el-icon-arrow-left"></i> 返回
+        </span>
+      </el-col>
       <el-col :span="12">
         <iframe :src="illness.illnessCase.pdfAddress" frameborder="0">
           <p>Your browser does not support iframes.</p>
@@ -152,7 +157,7 @@
               </el-row>
             </el-form-item>
             <el-divider></el-divider>
-            <el-form-item prop="remark">
+            <el-form-item>
               <el-row :gutter="20" class="title-content">
                 <el-col :span="7">
                   总分合计
@@ -270,16 +275,18 @@ export default {
   },
   watch: {},
   created() {
-    
-    
     if (this.illness.illnessEvaluate.wholeScore) {
       this.ruleForm = this.illness.illnessEvaluate;
     }
-    this.allNUm()
+    this.allNUm();
     // console.log(this.ruleForm);
     // console.log(this.illness.illnessEvaluate);
   },
   methods: {
+    // 返回上一层
+    back() {
+      this.$router.go(-1);
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -308,7 +315,7 @@ export default {
         this.ruleForm.treatmentResult +
         this.ruleForm.summary +
         this.ruleForm.wholeScore;
-        console.log(this.ruleForm.scoreSum);
+      console.log(this.ruleForm.scoreSum);
       if (this.ruleForm.scoreSum >= 85) {
         this.ruleForm.hasRecommend = 1;
       } else if (this.ruleForm.scoreSum < 85 && this.ruleForm.scoreSum >= 70) {
@@ -350,6 +357,11 @@ export default {
     font-size: 50px;
     padding-top: 20px;
     color: #80c269;
+  }
+  .back {
+    display: inline-block;
+    cursor: pointer;
+    line-height: 50px;
   }
 }
 </style>

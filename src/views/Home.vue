@@ -30,7 +30,8 @@
                 <p v-else>
                   <!-- {{item.illnessEvaluate.scoreSum ? }} -->
                   <span v-if="item.illnessEvaluate.scoreSum>=85">A类</span>
-                  <span v-else-if="70<item.illnessEvaluate.scoreSum<85">B类</span>
+                  <!-- this.ruleForm.scoreSum < 85 && this.ruleForm.scoreSum >= 70 -->
+                  <span v-else-if="item.illnessEvaluate.scoreSum<85 && item.illnessEvaluate.scoreSum>=70">B类</span>
                   <span v-else-if="item.illnessEvaluate.scoreSum<70">C类</span>
                 </p>
               </div>
@@ -82,9 +83,11 @@ export default {
 
   .box-card {
     padding-bottom: 10px;
+    margin-bottom: 20px;
   }
   .top-title {
     background-color: #005fad;
+    
     color: #ffffff;
     text-align: center;
     height: 110px;
