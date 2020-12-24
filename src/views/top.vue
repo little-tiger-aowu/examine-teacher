@@ -1,20 +1,10 @@
 <template>
   <div class="home">
+    <img src="@/assets/banner-2.jpg" width="100%" v-if="isshow" />
+    <img src="@/assets/banner-1.jpg" width="100%" v-else />
     <div class="top-title">
       <el-row>
         <el-col :span="4">
-          <!-- <div class="logo">
-            <img src="@/assets/logo.png" />
-          </div> -->
-        </el-col>
-        <el-col :span="16" :offset="4">
-          <h1 style="text-align: center;padding-top:5%">评审列表</h1>
-        </el-col>
-        <el-col :span="4">
-          <!-- <p>
-            <span>评审人：{{user.userName}}</span>
-            <el-link type="primary" href="/#/login" :underline="false">退出</el-link>
-          </p>-->
           <div class="header-buttom">
             <span class="header-user">
               <i class="el-icon-user-solid"></i>
@@ -39,6 +29,7 @@ export default {
   name: "Home",
   data() {
     return {
+      isshow: true,
       illnessList: [], //列表
       user: JSON.parse(Cookies.get("user")),
     };
@@ -54,20 +45,25 @@ export default {
       });
     },
   },
+  watch: {
+    $route(to) {
+      console.log(to);
+      if (to.fullPath == "/Home") {
+        this.isshow = true;
+      } else if (to.fullPath == "/detail") {
+        this.isshow = false;
+      }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
 .home {
   .top-title {
-    // background-color: #005fad;
-    background-image: url(~@/assets/banner.jpg);
-    // background-size:auto 100% ;
-    background-position: center;
-    height: 150px;
     color: #ffffff;
     text-align: center;
     padding: 40px 0;
-    position: relative;
+    margin-top: -80px;
     .el-row {
       // max-width: 1000px;
       margin: 0 auto;
@@ -94,30 +90,30 @@ export default {
     }
   }
   .header-buttom {
-      position: absolute;
-      bottom: -20px;
-      right: 25px;
-      height: 30px;
-      line-height: 27px;
+    position: absolute;
+    bottom: -20px;
+    right: 25px;
+    height: 30px;
+    line-height: 27px;
+    padding: 0 15px;
+    background-color: #f6f6f6;
+    border-radius: 5px;
+    span {
+      font-size: 12px;
+    }
+    .header-line {
+      color: #dcdcdc;
       padding: 0 15px;
-      background-color: #f6f6f6;
-      border-radius: 5px;
-      span {
-        font-size: 12px;
-      }
-      .header-line {
-        color: #dcdcdc;
-        padding: 0 15px;
-      }
-      .header-user {
-        color: #707070;
-      }
-      .header-out {
-        a {
-          color: #005fae;
-          text-decoration: none;
-        }
+    }
+    .header-user {
+      color: #707070;
+    }
+    .header-out {
+      a {
+        color: #005fae;
+        text-decoration: none;
       }
     }
+  }
 }
 </style>

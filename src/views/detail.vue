@@ -1,19 +1,24 @@
 <template>
   <div class="detail">
-    <el-row :gutter="20" style="margin:20px">
+    <el-row :gutter="20" style="margin: 20px">
       <el-col :span="24">
         <span @click="back" class="back">
           <i class="el-icon-arrow-left"></i> 返回
         </span>
       </el-col>
       <el-col :span="12">
-        <iframe :src="illness.illnessCase.pdfAddress" frameborder="0">
+        <iframe :src="illness.illnessCase.pdfAddress+'?t='+nowData" frameborder="0">
           <p>Your browser does not support iframes.</p>
         </iframe>
       </el-col>
       <el-col :span="12">
         <el-card class="box-card">
-          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+          <el-form
+            :model="ruleForm"
+            :rules="rules"
+            ref="ruleForm"
+            class="demo-ruleForm"
+          >
             <el-row :gutter="20" class="title">
               <el-col :span="7">评分要素</el-col>
               <el-col :span="10">评分要素</el-col>
@@ -26,7 +31,9 @@
                   <br />（总共15分）
                 </el-col>
                 <el-col :span="10">
-                  <span>主诉、病史、面向检查、口内检查、模型分析、头颅曲断片描述、头影测量、问题列表、总体诊断、CBCT片</span>
+                  <span
+                    >主诉、病史、面向检查、口内检查、模型分析、头颅曲断片描述、头影测量、问题列表、总体诊断、CBCT片</span
+                  >
                 </el-col>
                 <el-col :span="7">
                   <el-input-number
@@ -65,12 +72,29 @@
               </el-row>
             </el-form-item>
             <el-divider></el-divider>
+            <el-form-item prop="difficulty">
+              <el-row :gutter="20" class="title-content">
+                <el-col :span="7"> 病例新颖性、难度 （总共10分） </el-col>
+                <el-col :span="10">
+                  <span>对病例的新颖性和难度进行综合评价</span>
+                </el-col>
+                <el-col :span="7">
+                  <el-input-number
+                    size="small"
+                    @change="allNUm()"
+                    v-model="ruleForm.difficulty"
+                    controls-position="right"
+                    :precision="0"
+                    :min="0"
+                    :max="10"
+                  ></el-input-number>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-divider></el-divider>
             <el-form-item prop="treatmentProcess">
               <el-row :gutter="20" class="title-content">
-                <el-col :span="7">
-                  治疗过程
-                  （总共30分）
-                </el-col>
+                <el-col :span="7"> 治疗过程 （总共20分） </el-col>
                 <el-col :span="10">
                   <span>复诊时间和次数、口内照、面相照、矫治描述</span>
                 </el-col>
@@ -82,7 +106,7 @@
                     controls-position="right"
                     :precision="0"
                     :min="0"
-                    :max="30"
+                    :max="20"
                   ></el-input-number>
                 </el-col>
               </el-row>
@@ -90,12 +114,11 @@
             <el-divider></el-divider>
             <el-form-item prop="treatmentResult">
               <el-row :gutter="20" class="title-content">
-                <el-col :span="7">
-                  治疗结果
-                  （总共20分）
-                </el-col>
+                <el-col :span="7"> 治疗结果 （总共20分） </el-col>
                 <el-col :span="10">
-                  <span>面相对比、口内对比、头颅曲断片对比、头影测量分析、CBCT对比</span>
+                  <span
+                    >面相对比、口内对比、头颅曲断片对比、头影测量分析、CBCT对比</span
+                  >
                 </el-col>
                 <el-col :span="7">
                   <el-input-number
@@ -113,10 +136,7 @@
             <el-divider></el-divider>
             <el-form-item prop="summary">
               <el-row :gutter="20" class="title-content">
-                <el-col :span="7">
-                  讨论和经验分享
-                  （总共10分）
-                </el-col>
+                <el-col :span="7"> 讨论和经验分享 （总共10分） </el-col>
                 <el-col :span="10">
                   <span>对于此病例的总结和经验提取</span>
                 </el-col>
@@ -136,12 +156,11 @@
             <el-divider></el-divider>
             <el-form-item prop="wholeScore">
               <el-row :gutter="20" class="title-content">
-                <el-col :span="7">
-                  总体评分
-                  （总共10分）
-                </el-col>
+                <el-col :span="7"> 总体美学评分 （总共10分） </el-col>
                 <el-col :span="10">
-                  <span>根据总体内容、完整度及治疗效果</span>
+                  <span
+                    >根据病例治疗结果、过程、方法、理念与美学的相关程度、幻灯片的美观性等进行综合评价，涉及颌面部医学美学相关治疗的病例建议适当加分</span
+                  >
                 </el-col>
                 <el-col :span="7">
                   <el-input-number
@@ -157,22 +176,27 @@
               </el-row>
             </el-form-item>
             <el-divider></el-divider>
-            <el-form-item>
+            <el-form-item prop="remark">
               <el-row :gutter="20" class="title-content">
                 <el-col :span="7">
                   总分合计
                   <br />（总共100分）
-                  <div class="txt-1">{{ruleForm.scoreSum ? ruleForm.scoreSum:"0"}}</div>
+                  <div class="txt-1">
+                    {{ ruleForm.scoreSum ? ruleForm.scoreSum : "0" }}
+                  </div>
                 </el-col>
                 <el-col :span="16">
-                  <div>评语及建议备注</div>
+                  <div>评语及建议备注(需50字以上)</div>
                   <el-input
                     type="textarea"
-                    :autosize="{ minRows: 2, maxRows: 4}"
+                    :autosize="{ minRows: 2, maxRows: 4 }"
                     placeholder="请输入内容"
+                    minlength="50"
+                    @input="this.descInput"
                     v-model="ruleForm.remark"
-                    style="margin-top:10px"
+                    style="margin-top: 10px"
                   ></el-input>
+                  <p>当前字数：{{ txtVal }}</p>
                 </el-col>
               </el-row>
             </el-form-item>
@@ -188,8 +212,7 @@
                       disabled
                       border
                     >
-                      重点推荐
-                      A类
+                      重点推荐 A类
                     </el-radio>
                     <p>（总分≥85分）</p>
                   </el-col>
@@ -201,8 +224,7 @@
                       disabled
                       border
                     >
-                      一般推荐
-                      B类
+                      一般推荐 B类
                     </el-radio>
                     <p>（70≤总分＜85分）</p>
                   </el-col>
@@ -214,21 +236,21 @@
                       disabled
                       border
                     >
-                      不推荐
-                      C类
+                      不推荐 C类
                     </el-radio>
                     <p>（总分＜70分）</p>
                   </el-col>
                 </el-col>
               </el-row>
             </el-form-item>
-            <el-form-item style="text-align: center;">
+            <el-form-item style="text-align: center">
               <el-button
                 size="small"
-                style="width:50%;"
+                style="width: 50%"
                 type="primary"
                 @click="submitForm('ruleForm')"
-              >提交</el-button>
+                >保存</el-button
+              >
             </el-form-item>
           </el-form>
         </el-card>
@@ -239,11 +261,15 @@
 
 <script>
 import Cookies from "js-cookie";
-import { submitEvaluate } from "@/api/index";
+import { saveEvaluate } from "@/api/index";
 export default {
   name: "detail",
   data() {
     return {
+      nowData:"",
+      // 留言字数
+      txtVal: 0,
+      // 留言提示
       ruleForm: {
         checkDiagnosis: 0,
         goalPlan: 0,
@@ -251,23 +277,65 @@ export default {
         treatmentResult: 0,
         summary: 0,
         wholeScore: 0,
+        difficulty: 0,
         hasRecommend: 3,
       },
       rules: {
         checkDiagnosis: [
           { required: true, message: "请评分", trigger: "blur" },
+          {
+            pattern: /^-?([1-9]+(\.(\d*)|0)?)|(0(\.\d+){1})$/,
+            message: "请评分",
+          },
         ],
-        goalPlan: [{ required: true, message: "请评分", trigger: "blur" }],
+        goalPlan: [
+          { required: true, message: "请评分", trigger: "blur" },
+          {
+            pattern: /^-?([1-9]+(\.(\d*)|0)?)|(0(\.\d+){1})$/,
+            message: "请评分",
+          },
+        ],
         treatmentProcess: [
           { required: true, message: "请评分", trigger: "blur" },
+          {
+            pattern: /^-?([1-9]+(\.(\d*)|0)?)|(0(\.\d+){1})$/,
+            message: "请评分",
+          },
         ],
         treatmentResult: [
           { required: true, message: "请评分", trigger: "blur" },
+          {
+            pattern: /^-?([1-9]+(\.(\d*)|0)?)|(0(\.\d+){1})$/,
+            message: "请评分",
+          },
         ],
-        summary: [{ required: true, message: "请评分", trigger: "blur" }],
-        wholeScore: [{ required: true, message: "请评分", trigger: "blur" }],
+        difficulty: [
+          { required: true, message: "请评分", trigger: "blur" },
+          {
+            pattern: /^-?([1-9]+(\.(\d*)|0)?)|(0(\.\d+){1})$/,
+            message: "请评分",
+          },
+        ],
+        summary: [
+          { required: true, message: "请评分", trigger: "blur" },
+          {
+            pattern: /^-?([1-9]+(\.(\d*)|0)?)|(0(\.\d+){1})$/,
+            message: "请评分",
+          },
+        ],
+        wholeScore: [
+          { required: true, message: "请评分", trigger: "blur" },
+          {
+            pattern: /^-?([1-9]+(\.(\d*)|0)?)|(0(\.\d+){1})$/,
+            message: "请评分",
+          },
+        ],
         remark: [
           { required: true, message: "请填写评语及建议备注", trigger: "blur" },
+          {
+            pattern: /(.|\n){50,500}/,
+            message: "评语及建议备注需50字以上!",
+          },
         ],
       },
       illness: JSON.parse(Cookies.get("illness")),
@@ -275,6 +343,7 @@ export default {
   },
   watch: {},
   created() {
+    this.nowData = Date.parse(new Date())
     if (this.illness.illnessEvaluate.wholeScore) {
       this.ruleForm = this.illness.illnessEvaluate;
     }
@@ -283,6 +352,9 @@ export default {
     // console.log(this.illness.illnessEvaluate);
   },
   methods: {
+    descInput() {
+      this.txtVal = this.ruleForm.remark.length;
+    },
     // 返回上一层
     back() {
       this.$router.go(-1);
@@ -292,7 +364,8 @@ export default {
         if (valid) {
           this.ruleForm.illnessId = this.illness.illnessCase.id;
           this.ruleForm.id = this.illness.illnessEvaluate.id;
-          submitEvaluate(this.ruleForm).then((res) => {
+
+          saveEvaluate(this.ruleForm).then((res) => {
             console.log(res);
             this.$router.push("/");
             this.$message({ message: "评分成功！", type: "success" });
@@ -311,6 +384,7 @@ export default {
       this.ruleForm.scoreSum =
         this.ruleForm.checkDiagnosis +
         this.ruleForm.goalPlan +
+        this.ruleForm.difficulty +
         this.ruleForm.treatmentProcess +
         this.ruleForm.treatmentResult +
         this.ruleForm.summary +
@@ -367,8 +441,14 @@ export default {
 </style>
 <style lang="scss">
 .detail {
+  position: relative;
   .el-card__body {
     padding: 15px 0;
   }
+}
+.el-form-item__error {
+  position: absolute;
+  right: 60px !important;
+  left: auto;
 }
 </style>

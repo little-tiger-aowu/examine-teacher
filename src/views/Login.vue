@@ -1,13 +1,20 @@
 <template>
   <div class="login">
     <div class="logo">
-      <img src="@/assets/logo.png" />
+      <el-row type="flex" justify="space-between">
+        <el-col :span="1">
+          <img src="@/assets/logo-2.png" width="100%" />
+        </el-col>
+        <el-col :span="3">
+          <img src="@/assets/logo.png" width="100%" />
+        </el-col>
+      </el-row>
     </div>
 
     <el-row class="login-box">
-      <el-col :xs="24" :sm="15" :md="16" :lg="17" :xl="18" v-show="!isMobile">
+      <el-col :xs="24" :sm="15" :md="16" :lg="17" :xl="18">
         <div class="login-txt">
-          <img src="@/assets/login-txt.png" />
+          <!-- <img src="@/assets/login-txt.png" /> -->
         </div>
       </el-col>
       <el-col :xs="24" :sm="9" :md="8" :lg="7" :xl="6">
@@ -19,17 +26,35 @@
                   <img src="@/assets/login-txt2.png" />
                 </div>
                 <!-- 登录 -->
+                <h3>评审登录</h3>
               </div>
 
-              <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+              <el-form
+                :model="ruleForm"
+                :rules="rules"
+                ref="ruleForm"
+                class="demo-ruleForm"
+              >
                 <el-form-item prop="username">
-                  <el-input v-model="ruleForm.username" placeholder="用户名"></el-input>
+                  <el-input
+                    v-model="ruleForm.username"
+                    placeholder="用户名"
+                  ></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                  <el-input placeholder="请输入密码" v-model="ruleForm.password" show-password></el-input>
+                  <el-input
+                    placeholder="请输入密码"
+                    v-model="ruleForm.password"
+                    show-password
+                  ></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button style="width:100%" type="primary" @click="submitForm('ruleForm')">登录</el-button>
+                  <el-button
+                    style="width: 100%"
+                    type="primary"
+                    @click="submitForm('ruleForm')"
+                    >登录</el-button
+                  >
                 </el-form-item>
               </el-form>
             </div>
@@ -50,7 +75,6 @@ export default {
       rules: {
         username: [
           { required: true, message: "请输入用户名称", trigger: "blur" },
-          { min: 3, max: 15, message: "长度在 3 到 5 个字符", trigger: "blur" },
         ],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
       },
@@ -65,7 +89,11 @@ export default {
               this.$message({ message: "登陆成功", type: "success" });
               setToken(res.data.accessToken);
               Cookies.set("user", res.data);
-              this.$router.push("/");
+              if (res.data.userName == "admin") {
+                this.$router.push("/allList");
+              } else {
+                this.$router.push("/");
+              }
             } else {
               this.$message(res.msg);
             }
@@ -85,7 +113,7 @@ export default {
 <style lang="scss" scoped>
 .login {
   background-color: #f5f5f5;
-  background: url("~@/assets/login-background.png");
+  background: url("~@/assets/login-banner.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   padding: 0 5%;
@@ -106,21 +134,25 @@ export default {
     .form-box {
       .title-txt {
         text-align: center;
-        padding-bottom: 15px;
+        // padding-bottom: 15px;
         img {
           max-width: 70%;
-          padding-bottom: 30px;
+          padding-bottom: 15px;
         }
       }
-    } 
+    }
   }
   .logo {
     position: absolute;
     top: 5%;
-    left: 5%;
-    img {
-      width: 90%;
+    left: 0;
+    width: 100%;
+    .el-row {
+      padding: 0 50px;
     }
+    // img {
+    //   width: 90%;
+    // }
   }
   .login-txt,
   .box-card {
@@ -139,6 +171,5 @@ export default {
       max-width: 50%;
     }
   }
-
 }
 </style>

@@ -4,7 +4,7 @@ import Home from '../views/top.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'top',
@@ -22,6 +22,12 @@ Vue.use(VueRouter)
         name: 'detail',
         component: () => import(/* webpackChunkName: "about" */ '../views/detail.vue'),
         meta: { title: '评分页面', icon: 'icon-shouyetianchong' }
+      },
+      {
+        path: 'allList',
+        name: 'allList',
+        component: () => import(/* webpackChunkName: "about" */ '../views/allList.vue'),
+        meta: { title: '全部案例', icon: 'icon-shouyetianchong' }
       }
     ]
   },
