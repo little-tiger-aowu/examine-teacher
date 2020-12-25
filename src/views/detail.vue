@@ -28,7 +28,7 @@
               <el-row :gutter="20" class="title-content">
                 <el-col :span="7">
                   检查和诊断
-                  <br />（总共15分）
+                  <br />（总共20分）
                 </el-col>
                 <el-col :span="10">
                   <span
@@ -42,7 +42,7 @@
                     size="small"
                     :precision="0"
                     :min="0"
-                    :max="15"
+                    :max="20"
                     @change="allNUm()"
                   ></el-input-number>
                 </el-col>
@@ -53,7 +53,7 @@
               <el-row :gutter="20" class="title-content">
                 <el-col :span="7">
                   治疗目标和计划
-                  <br />（总共15分）
+                  <br />（总共20分）
                 </el-col>
                 <el-col :span="10">
                   <span>治疗目标、治疗方案和矫治理念</span>
@@ -66,7 +66,7 @@
                     controls-position="right"
                     :precision="0"
                     :min="0"
-                    :max="15"
+                    :max="20"
                   ></el-input-number>
                 </el-col>
               </el-row>
@@ -154,7 +154,7 @@
               </el-row>
             </el-form-item>
             <el-divider></el-divider>
-            <el-form-item prop="wholeScore">
+            <!-- <el-form-item prop="wholeScore">
               <el-row :gutter="20" class="title-content">
                 <el-col :span="7"> 总体美学评分 （总共10分） </el-col>
                 <el-col :span="10">
@@ -174,7 +174,7 @@
                   ></el-input-number>
                 </el-col>
               </el-row>
-            </el-form-item>
+            </el-form-item> -->
             <el-divider></el-divider>
             <el-form-item prop="remark">
               <el-row :gutter="20" class="title-content">

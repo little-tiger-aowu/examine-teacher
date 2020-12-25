@@ -24,7 +24,7 @@
                 <p>所在单位：{{ item.illnessCase.company }}</p> -->
                 <p>
                   评审状态：{{
-                    item.illnessEvaluate.wholeScore ? "已评分" : "未评分"
+                    item.illnessEvaluate.scoreSum ? "已评分" : "未评分"
                   }}
                 </p>
                 <p>
@@ -37,11 +37,7 @@
             <el-col :span="9" style="padding: 0">
               <p class="title-num">
                 <!-- <i class="el-icon-circle-check"></i> -->
-                {{
-                  item.illnessEvaluate.wholeScore
-                    ? item.illnessEvaluate.scoreSum
-                    : "000"
-                }}分
+                {{item.illnessEvaluate.scoreSum}}分
               </p>
               <div class="box-kind">
                 <p v-if="item.illnessEvaluate.scoreSum == null">暂无</p>
