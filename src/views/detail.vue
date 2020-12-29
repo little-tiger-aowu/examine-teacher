@@ -343,12 +343,13 @@ export default {
   },
   watch: {},
   created() {
+    console.log("illness::"+this.illness);
     this.nowData = Date.parse(new Date())
-    if (this.illness.illnessEvaluate.wholeScore) {
+    if (this.illness.illnessEvaluate.scoreSum) {
       this.ruleForm = this.illness.illnessEvaluate;
     }
     this.allNUm();
-    // console.log(this.ruleForm);
+    console.log(this.ruleForm);
     // console.log(this.illness.illnessEvaluate);
   },
   methods: {

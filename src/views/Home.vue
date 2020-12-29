@@ -157,6 +157,7 @@ export default {
         });
     },
     routerPush(item) {
+      console.log(item);
       Cookies.set("illness", item);
       if (!item.illnessEvaluate.status) {
         this.$router.push("/detail");
