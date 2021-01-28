@@ -1,10 +1,12 @@
 <template>
   <div class="case">
+    <search class="search" ref="search" @ok="handleOk"/>
+    <el-divider></el-divider>
     <el-table :data="tableData" style="width: 70%; margin: auto">
-      <el-table-column prop="illnessCase.id" width="70"> </el-table-column>
+      <el-table-column prop="illnessCase.id" width="70"></el-table-column>
       <el-table-column prop="illnessCase.author" label="作者">
       </el-table-column>
-      <el-table-column prop="illnessCase.title" label="标题"> </el-table-column>
+      <el-table-column prop="illnessCase.title" label="标题"></el-table-column>
       <el-table-column prop="illnessCase.company" label="公司">
       </el-table-column>
 
@@ -15,36 +17,48 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column prop="illnessCase.tags" label="标签"></el-table-column>
+      <el-table-column prop="illnessCase.area" label="区域"></el-table-column>
+      <el-table-column prop="illnessCase.type" label="类型"></el-table-column>
+      <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <a :href="scope.row.illnessCase.pdfAddress" target="_blank">
             <el-button type="success" size="small">查看作品</el-button>
           </a>
           <el-button
-            type="primary"
-            size="small"
-            v-if="user.userName == 'admin' && scope.row.refereeList.length == 0"
-            @click="handelRefereesChoose(scope.row.illnessCase.id)"
-            >分配评审</el-button
-          >
+              type="primary"
+              size="small"
+              v-if="user.userName == 'admin' && scope.row.refereeList.length == 0"
+              @click="handelRefereesChoose(scope.row.illnessCase.id)"
+          >分配评审
+          </el-button>
+
+          <el-button
+              type="primary"
+              size="small"
+              v-if="user.userName == 'admin'"
+              @click="handelTag(scope.row.illnessCase)"
+          >打标签
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 弹窗 选择评审 -->
     <el-dialog
-      title="分配评审"
-      :visible.sync="dialogVisible"
-      width="50%"
-      @close="handleClose"
+        title="分配评审"
+        :visible.sync="dialogVisible"
+        width="50%"
+        @close="handleClose"
     >
       <div>
         <el-checkbox-group v-model="checkedCities" :max="3">
           <el-checkbox
-            v-for="item in refereesData"
-            :label="item.id"
-            :key="item.id"
-            >{{ item.username }}</el-checkbox
+              v-for="item in refereesData"
+              :label="item.id"
+              :key="item.id"
+          >{{ item.username }}
+          </el-checkbox
           >
         </el-checkbox-group>
       </div>
@@ -53,12 +67,37 @@
         <el-button type="primary" @click="handelReferees">确 定</el-button>
       </span>
     </el-dialog>
+
+    <!-- 弹窗 打标签 -->
+    <el-dialog
+        title="打标签"
+        :visible.sync="tagVisible"
+        width="50%"
+        @close="tagHandleClose"
+    >
+      <div>
+        <el-checkbox-group v-model="checkTagsData" :max="3">
+          <el-checkbox
+              v-for="item in tagsData"
+              :label="item"
+              :key="item"
+          >{{ item }}
+          </el-checkbox
+          >
+        </el-checkbox-group>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="tagHandleClose">取 消</el-button>
+        <el-button type="primary" @click="tagHandelSure">确 定</el-button>
+      </span>
+    </el-dialog>
+
     <div style="text-align: center; margin-top: 50px">
       <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="total"
-        @current-change="handleCurrentChange"
+          background
+          layout="prev, pager, next"
+          :total="total"
+          @current-change="handleCurrentChange"
       >
       </el-pagination>
     </div>
@@ -66,8 +105,13 @@
 </template>
 <script>
 import Cookies from "js-cookie";
-import { illnessCases, refereesPage, refereesChoose } from "@/api/index";
+import {illnessCases, refereesChoose, refereesPage, tag} from "@/api/index";
+import search from "./search";
+
 export default {
+  components: {
+    search
+  },
   data() {
     return {
       tableData: [],
@@ -76,9 +120,14 @@ export default {
       user: JSON.parse(Cookies.get("user")),
       // 选择评委
       refereesId: "",
+      illnessId: '',
       dialogVisible: false,
       refereesData: [],
       checkedCities: [],
+      // 打标签
+      checkTagsData: [],
+      tagsData: ['拔牙', '深覆颌', '深覆盖'],
+      tagVisible: false
     };
   },
   created() {
@@ -86,10 +135,11 @@ export default {
     this.getRefereesPage();
   },
   methods: {
-    _getviewIllnessCases() {
+    _getviewIllnessCases(exData = {}) {
       let data = {
         current: this.current,
         size: 10,
+        ...exData
       };
       illnessCases(data).then((res) => {
         console.log(res);
@@ -148,6 +198,44 @@ export default {
       this.refereesId = id;
       this.dialogVisible = true;
     },
+
+    // 取消打标签
+    tagHandleClose() {
+      this.tagVisible = false;
+      this.checkTagsData = [];
+    },
+
+    // 确定打标签
+    tagHandelSure() {
+      let subData = []
+      this.tagsData.forEach(all=>{
+        if (this.checkTagsData.includes(all)){
+          subData.push(all)
+        }
+      })
+      const data = {
+        illnessId: this.illnessId,
+        tags: subData.join(",")
+      }
+      tag(data).then(() => {
+        this.tagVisible = false;
+        this.checkedCities = [];
+        this._getviewIllnessCases()
+      })
+    },
+
+    // 标签弹窗激活
+    handelTag(record) {
+      console.log(record)
+      this.tagVisible = true;
+      this.illnessId = record.id
+      if (record.tags) {
+        this.checkTagsData = record.tags.split(',');
+      }
+    },
+    handleOk(event) {
+      this._getviewIllnessCases(event)
+    }
   },
 };
 </script>
@@ -155,7 +243,19 @@ export default {
 .case {
   padding: 50px 0;
 }
+
+.search {
+  width: 70%;
+  margin: auto;
+}
+
 .el-button {
   margin-left: 10px;
+}
+
+.el-checkbox {
+  font-size: 20px;
+  min-width: 100px;
+  margin-bottom: 20px;
 }
 </style>
