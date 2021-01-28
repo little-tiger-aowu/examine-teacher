@@ -76,7 +76,7 @@
         @close="tagHandleClose"
     >
       <div>
-        <el-checkbox-group v-model="checkTagsData" :max="3">
+        <el-checkbox-group v-model="checkTagsData" :max="10">
           <el-checkbox
               v-for="item in tagsData"
               :label="item"
@@ -126,7 +126,7 @@ export default {
       checkedCities: [],
       // 打标签
       checkTagsData: [],
-      tagsData: ['拔牙', '深覆颌', '深覆盖'],
+      tagsData: ['拔牙', '深覆颌', '深覆盖','拔上下4','把上4下5','拔上5下4','拔下颌切牙','拔其他牙','非拔牙','反𬌗','安氏Ⅰ类','安氏Ⅱ类','安氏Ⅲ类','正颌手术','双颌前突','低角','高角','支抗钉辅助','后牙锁𬌗','牙弓狭'],
       tagVisible: false
     };
   },
@@ -220,6 +220,7 @@ export default {
       tag(data).then(() => {
         this.tagVisible = false;
         this.checkedCities = [];
+        this._getviewIllnessCases()
       })
     },
 
