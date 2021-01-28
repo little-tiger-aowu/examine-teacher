@@ -220,7 +220,6 @@ export default {
       tag(data).then(() => {
         this.tagVisible = false;
         this.checkedCities = [];
-        this._getviewIllnessCases()
       })
     },
 
