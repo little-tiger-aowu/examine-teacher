@@ -186,12 +186,11 @@
                   </div>
                 </el-col>
                 <el-col :span="16">
-                  <div>评语及建议备注(需50字以上)</div>
+                  <div>评语及建议备注</div>
                   <el-input
                     type="textarea"
                     :autosize="{ minRows: 2, maxRows: 4 }"
                     placeholder="请输入内容"
-                    minlength="50"
                     @input="this.descInput"
                     v-model="ruleForm.remark"
                     style="margin-top: 10px"
@@ -331,11 +330,7 @@ export default {
           },
         ],
         remark: [
-          { required: true, message: "请填写评语及建议备注", trigger: "blur" },
-          {
-            pattern: /(.|\n){50,500}/,
-            message: "评语及建议备注需50字以上!",
-          },
+          { required: false, message: "请填写评语及建议备注", trigger: "blur" },
         ],
       },
       illness: JSON.parse(Cookies.get("illness")),
