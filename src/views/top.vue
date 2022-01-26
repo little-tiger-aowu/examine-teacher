@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img src="@/assets/banner-2.jpg" width="100%" v-if="isshow" />
-    <img src="@/assets/banner-1.jpg" width="100%" v-else />
+    <!-- <img src="@/assets/banner-1.jpg" width="100%" v-else /> -->
     <div class="top-title">
       <el-row>
         <el-col :span="4">

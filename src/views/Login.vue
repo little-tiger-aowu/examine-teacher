@@ -3,10 +3,11 @@
     <div class="logo">
       <el-row type="flex" justify="space-between">
         <el-col :span="1">
-          <img src="@/assets/logo-2.png" width="100%" />
+          <!-- <img src="@/assets/logo-2.png" width="100%" /> -->
+          <img src="@/assets/logo.png" width="400%" />
         </el-col>
         <el-col :span="3">
-          <img src="@/assets/logo.png" width="100%" />
+          
         </el-col>
       </el-row>
     </div>
@@ -22,8 +23,8 @@
           <el-card>
             <div class="form-box">
               <div class="title-txt">
-                <div>
-                  <img src="@/assets/login-txt2.png" />
+                <div style="color: rgb(0, 89, 160); font-size: 23px;">
+                  <b> “全民新show”病例巡回展</b>
                 </div>
                 <!-- 登录 -->
                 <h3>评审登录</h3>
@@ -113,7 +114,7 @@ export default {
 <style lang="scss" scoped>
 .login {
   background-color: #f5f5f5;
-  background: url("~@/assets/login-banner.jpg");
+  background: url("~@/assets/login-banner.png");
   background-repeat: no-repeat;
   background-size: cover;
   padding: 0 5%;
@@ -135,10 +136,10 @@ export default {
       .title-txt {
         text-align: center;
         // padding-bottom: 15px;
-        img {
-          max-width: 70%;
-          padding-bottom: 15px;
-        }
+        // img {
+        //   max-width: 70%;
+        //   padding-bottom: 15px;
+        // }
       }
     }
   }
