@@ -6,7 +6,7 @@
       <el-table-column prop="illnessCase.id" width="70"></el-table-column>
       <el-table-column prop="illnessCase.author" label="作者">
       </el-table-column>
-      <el-table-column prop="illnessCase.title" label="标题"></el-table-column>
+      <!-- <el-table-column prop="illnessCase.title" label="标题"></el-table-column> -->
       <el-table-column prop="illnessCase.company" label="公司">
       </el-table-column>
 
@@ -18,7 +18,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="illnessCase.tags" label="标签"></el-table-column>
-      <el-table-column prop="illnessCase.area" label="区域"></el-table-column>
+      <el-table-column prop="illnessCase.province" label="区域"></el-table-column>
       <el-table-column prop="illnessCase.type" label="类型"></el-table-column>
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
@@ -33,13 +33,13 @@
           >分配评审
           </el-button>
 
-          <el-button
+          <!-- <el-button
               type="primary"
               size="small"
               v-if="user.userName == 'admin'"
               @click="handelTag(scope.row.illnessCase)"
           >打标签
-          </el-button>
+          </el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -142,7 +142,7 @@ export default {
         ...exData
       };
       illnessCases(data).then((res) => {
-        console.log(res);
+        console.log("============",res);
         if (res.code == 200) {
           this.tableData = res.data.records;
 
