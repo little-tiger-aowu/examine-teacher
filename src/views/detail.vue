@@ -7,7 +7,10 @@
         </span>
       </el-col>
       <el-col :span="12">
-        <iframe :src="illness.illnessCase.pdfAddress+'?t='+nowData" frameborder="0">
+        <iframe
+          :src="illness.illnessCase.pdfAddress + '?t=' + nowData"
+          frameborder="0"
+        >
           <p>Your browser does not support iframes.</p>
         </iframe>
       </el-col>
@@ -28,11 +31,11 @@
               <el-row :gutter="20" class="title-content">
                 <el-col :span="7">
                   检查和诊断
-                  <br />（总共20分）
+                  <br />（总共25分）
                 </el-col>
                 <el-col :span="10">
                   <span
-                    >主诉、病史、面向检查、口内检查、模型分析、头颅曲断片描述、头影测量、问题列表、总体诊断、CBCT片</span
+                    >主诉、病史、面相检查、口内检查、模型分析、头颅曲断片描述、头影测量、问题列表、总体诊断、CBCT片</span
                   >
                 </el-col>
                 <el-col :span="7">
@@ -42,7 +45,7 @@
                     size="small"
                     :precision="0"
                     :min="0"
-                    :max="20"
+                    :max="25"
                     @change="allNUm()"
                   ></el-input-number>
                 </el-col>
@@ -53,10 +56,10 @@
               <el-row :gutter="20" class="title-content">
                 <el-col :span="7">
                   治疗目标和计划
-                  <br />（总共20分）
+                  <br />（总共25分）
                 </el-col>
                 <el-col :span="10">
-                  <span>治疗目标、治疗方案和矫治理念</span>
+                  <span>治疗目标、治疗方案和符合Damon矫治理念</span>
                 </el-col>
                 <el-col :span="7">
                   <el-input-number
@@ -66,13 +69,13 @@
                     controls-position="right"
                     :precision="0"
                     :min="0"
-                    :max="20"
+                    :max="25"
                   ></el-input-number>
                 </el-col>
               </el-row>
             </el-form-item>
             <el-divider></el-divider>
-            <el-form-item prop="difficulty">
+            <!-- <el-form-item prop="difficulty">
               <el-row :gutter="20" class="title-content">
                 <el-col :span="7"> 病例新颖性、难度 （总共10分） </el-col>
                 <el-col :span="10">
@@ -90,7 +93,7 @@
                   ></el-input-number>
                 </el-col>
               </el-row>
-            </el-form-item>
+            </el-form-item> -->
             <el-divider></el-divider>
             <el-form-item prop="treatmentProcess">
               <el-row :gutter="20" class="title-content">
@@ -117,7 +120,7 @@
                 <el-col :span="7"> 治疗结果 （总共20分） </el-col>
                 <el-col :span="10">
                   <span
-                    >面相对比、口内对比、头颅曲断片对比、头影测量分析、CBCT对比</span
+                    >面相对比、口内对比、头颅曲断片对比、头影测量分析、CBCT对比核磁共振等影像资料对比</span
                   >
                 </el-col>
                 <el-col :span="7">
@@ -136,9 +139,11 @@
             <el-divider></el-divider>
             <el-form-item prop="summary">
               <el-row :gutter="20" class="title-content">
-                <el-col :span="7"> 讨论和经验分享 （总共10分） </el-col>
+                <el-col :span="7"> 总体评价 （总共10分） </el-col>
                 <el-col :span="10">
-                  <span>对于此病例的总结和经验提取</span>
+                  <span
+                    >根据总体内容、完整度及治疗效果，经验分享进行评分，如有值得学习借鉴的失败经验也可以酌情加分</span
+                  >
                 </el-col>
                 <el-col :span="7">
                   <el-input-number
@@ -186,7 +191,7 @@
                   </div>
                 </el-col>
                 <el-col :span="16">
-                  <div>评语及建议备注</div>
+                  <div>评委评语及建议</div>
                   <el-input
                     type="textarea"
                     :autosize="{ minRows: 2, maxRows: 4 }"
@@ -201,7 +206,7 @@
             </el-form-item>
             <el-form-item prop="hasRecommend">
               <el-row :gutter="10" class="title-content">
-                <el-col :span="7">推荐评级</el-col>
+                <el-col :span="7">是否推荐</el-col>
                 <el-col :span="17">
                   <el-col :span="8">
                     <el-radio
@@ -265,7 +270,7 @@ export default {
   name: "detail",
   data() {
     return {
-      nowData:"",
+      nowData: "",
       // 留言字数
       txtVal: 0,
       // 留言提示
@@ -338,8 +343,8 @@ export default {
   },
   watch: {},
   created() {
-    console.log("illness::"+this.illness);
-    this.nowData = Date.parse(new Date())
+    console.log("illness::" + this.illness);
+    this.nowData = Date.parse(new Date());
     if (this.illness.illnessEvaluate.scoreSum) {
       this.ruleForm = this.illness.illnessEvaluate;
     }
