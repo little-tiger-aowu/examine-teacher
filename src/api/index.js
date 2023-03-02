@@ -4,7 +4,7 @@ import request from '@/utils/request';
 // 登陆
 export function login(data) {
     return request({
-        url: '/authorize/referee',
+        url: '/authorization/referee',
         method: 'POST',
         data
     });
@@ -37,7 +37,7 @@ export function submitEvaluate(data) {
 // 获取全部案例
 export function illnessCases(params) {
     return request({
-        url: 'illness_cases/page',
+        url: '/illnessCase/page',
         method: 'GET',
         params: params
     });

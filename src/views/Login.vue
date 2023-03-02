@@ -4,10 +4,10 @@
       <el-row type="flex" justify="space-between">
         <el-col :span="1">
           <!-- <img src="@/assets/logo-2.png" width="100%" /> -->
-          <img src="@/assets/logo.png" width="400%" />
+<!--          <img src="@/assets/logo.png" width="400%" />-->
         </el-col>
         <el-col :span="3">
-          
+
         </el-col>
       </el-row>
     </div>
@@ -24,7 +24,7 @@
             <div class="form-box">
               <div class="title-txt">
                 <div style="color: rgb(0, 89, 160); font-size: 23px;">
-                  <b> “全民新show”病例巡回展</b>
+                  <b> 2022Ormco第三届百强病例大赛</b>
                 </div>
                 <!-- 登录 -->
                 <h3>评审登录</h3>
@@ -114,7 +114,7 @@ export default {
 <style lang="scss" scoped>
 .login {
   background-color: #f5f5f5;
-  background: url("~@/assets/login-banner.png");
+  background: url("~@/assets/login-banner1.png");
   background-repeat: no-repeat;
   background-size: cover;
   padding: 0 5%;

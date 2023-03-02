@@ -2,19 +2,39 @@
   <div class="detail">
     <el-row :gutter="20" style="margin: 20px">
       <el-col :span="24">
-        <span @click="back" class="back">
+        <el-col :span="22">
+          <span  @click="back" class="back">
           <i class="el-icon-arrow-left"></i> 返回
         </span>
+        </el-col>
+        <el-col :span="2" style="">
+          <el-button :span="12" type="primary">
+            <a style="color: #eeeeee;text-decoration: none;" href="https://ssl.resource.synconize.com/binglishoujidafen.xlsx">下载评分表</a>
+          </el-button>
+        </el-col>
       </el-col>
-      <el-col :span="12">
+
+      <el-col :span="16">
         <iframe
           :src="illness.illnessCase.pdfAddress + '?t=' + nowData"
           frameborder="0"
         >
           <p>Your browser does not support iframes.</p>
         </iframe>
+        <div v-if="illness.illnessCase.videoAddress" style="height: auto;width: auto">
+          <hr/>
+<!--          <iframe v-if="fileType === 'ppt' || this.fileType === 'pptx'" id="iframe1" width="800" height="600" frameborder='no' border='0' marginwidth='0' marginheight='0' scrolling='no' allowtransparency='yes'-->
+<!--                  :src="'http://view.officeapps.live.com/op/view.aspx?src='+illness.illnessCase.videoAddress">-->
+<!--            <p>Your browser does not support iframes.</p>-->
+<!--          </iframe>-->
+          <div v-if="fileType === 'ppt' || this.fileType === 'pptx'"></div>
+<!--          <el-button style="float: right" v-if="fileType === 'ppt' || this.fileType === 'pptx'" :span="12" type="primary">-->
+<!--            <a style="color: #eeeeee;text-decoration: none;" :href="illness.illnessCase.videoAddress"><i class="el-icon-download"></i>下载ppt</a>-->
+<!--          </el-button>-->
+          <video v-else :src="illness.illnessCase.videoAddress" style="width: 100%" controls="controls" ></video>
+        </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8">
         <el-card class="box-card">
           <el-form
             :model="ruleForm"
@@ -24,18 +44,18 @@
           >
             <el-row :gutter="20" class="title">
               <el-col :span="7">评分要素</el-col>
-              <el-col :span="10">评分要素</el-col>
+              <el-col :span="10">评分细则</el-col>
               <el-col :span="7">分项评分</el-col>
             </el-row>
             <el-form-item prop="checkDiagnosis">
               <el-row :gutter="20" class="title-content">
                 <el-col :span="7">
-                  检查和诊断
-                  <br />（总共25分）
+                  <b>检查和诊断
+                  <br />（总分20）</b>
                 </el-col>
                 <el-col :span="10">
                   <span
-                    >主诉、病史、面相检查、口内检查、模型分析、头颅曲断片描述、头影测量、问题列表、总体诊断、CBCT片</span
+                    >主诉（2分）<br>病史（2分）<br>面相检查（2分）<br>口内检查（2分）<br>模型分析（2分）<br>头颅曲断片描述（2分）<br>头影测量（2分）<br>问题列表（2分）<br>总体诊断（2分）<br>CBCT片（2分）</span
                   >
                 </el-col>
                 <el-col :span="7">
@@ -45,7 +65,7 @@
                     size="small"
                     :precision="0"
                     :min="0"
-                    :max="25"
+                    :max="20"
                     @change="allNUm()"
                   ></el-input-number>
                 </el-col>
@@ -55,11 +75,15 @@
             <el-form-item prop="goalPlan">
               <el-row :gutter="20" class="title-content">
                 <el-col :span="7">
-                  治疗目标和计划
-                  <br />（总共25分）
+                  <b>治疗目标和计划
+                  <br />（总分20）</b>
                 </el-col>
                 <el-col :span="10">
-                  <span>治疗目标、治疗方案和符合Damon矫治理念</span>
+                  <span>
+                    治疗目标（5分）<br>治疗方案（15分）<br>
+<!--                    基本治疗目标为：1. 纠正前牙反𬌗，2. 缓解上下颌拥挤，3. 建立正常的覆𬌗覆盖关系，4. 改善侧面貌，5. 获得满意的结果，ABO 评分不少于 30-->
+                    <b>若矫治难度高12--15分，矫治难度中等7--12分。符合Damon矫治理念，可酌情加3分</b>
+                  </span>
                 </el-col>
                 <el-col :span="7">
                   <el-input-number
@@ -69,7 +93,7 @@
                     controls-position="right"
                     :precision="0"
                     :min="0"
-                    :max="25"
+                    :max="20"
                   ></el-input-number>
                 </el-col>
               </el-row>
@@ -97,11 +121,18 @@
             <el-divider></el-divider>
             <el-form-item prop="treatmentProcess">
               <el-row :gutter="20" class="title-content">
-                <el-col :span="7"> 治疗过程 （总共20分） </el-col>
-                <el-col :span="10">
-                  <span>复诊时间和次数、口内照、面相照、矫治描述</span>
+                <el-col :span="7"> <b>治疗过程<br /> （总分20）</b> </el-col>
+                <el-col :span="11">
+<!--                  <span>复诊时间和次数、口内照、面相照、矫治描述</span>-->
+                  <span>
+                    每次复诊皆有以下打分项(最多三次)<br>
+                    时间(1分)、口内照(1分)<br>
+                    面相照(1分)<br>矫治描述(1分)<br>
+                    <b>额外加分项(共8分):<br></b>
+                    额外一次以上(含)复诊资料(2分)<br>重视提及关节异常(2分) <br>重视提及给学问题(2分)<br>涉及到正畸正颌联合治疗/多学科联合治疗(2分)
+                  </span>
                 </el-col>
-                <el-col :span="7">
+                <el-col :span="6">
                   <el-input-number
                     size="small"
                     @change="allNUm()"
@@ -117,13 +148,14 @@
             <el-divider></el-divider>
             <el-form-item prop="treatmentResult">
               <el-row :gutter="20" class="title-content">
-                <el-col :span="7"> 治疗结果 （总共20分） </el-col>
-                <el-col :span="10">
-                  <span
-                    >面相对比、口内对比、头颅曲断片对比、头影测量分析、CBCT对比核磁共振等影像资料对比</span
+                <el-col :span="7"> <b>治疗结果<br> （总分20）</b> </el-col>
+                <el-col :span="11">
+                  <span>面相对比（4分）<br>口内对比（4分）<br>头颅曲断片对比（2分）<br>头影测量分析（3分）<br>CBCT/核磁共振等影像资料对比（3分）<br>
+                    跟踪随访:面像、口内照（4分）
+                  </span
                   >
                 </el-col>
-                <el-col :span="7">
+                <el-col :span="6">
                   <el-input-number
                     size="small"
                     @change="allNUm()"
@@ -139,13 +171,19 @@
             <el-divider></el-divider>
             <el-form-item prop="summary">
               <el-row :gutter="20" class="title-content">
-                <el-col :span="7"> 总体评价 （总共10分） </el-col>
-                <el-col :span="10">
-                  <span
-                    >根据总体内容、完整度及治疗效果，经验分享进行评分，如有值得学习借鉴的失败经验也可以酌情加分</span
-                  >
+                <el-col :span="7"> <b>总体评价 （总分20）</b> </el-col>
+                <el-col :span="11">
+<!--                  <span-->
+<!--                    >根据总体内容、完整度及治疗效果，经验分享进行评分，如有值得学习借鉴的失败经验也可以酌情加分</span-->
+<!--                  >-->
+                  <span>
+                    总体评价（15分）<br>
+                    示例：总体内容、完整度、治疗效果、经验分享。如有值得学习借鉴的失败经验也可以酌情加分<br>
+                    视频讲解（5分）<br>
+                    示例：医生对病例讲解。若有视频讲解帮助病例介绍及讲解治疗思路可酌情加分
+                  </span>
                 </el-col>
-                <el-col :span="7">
+                <el-col :span="6">
                   <el-input-number
                     size="small"
                     @change="allNUm()"
@@ -153,7 +191,7 @@
                     controls-position="right"
                     :precision="0"
                     :min="0"
-                    :max="10"
+                    :max="20"
                   ></el-input-number>
                 </el-col>
               </el-row>
@@ -184,8 +222,8 @@
             <el-form-item prop="remark">
               <el-row :gutter="20" class="title-content">
                 <el-col :span="7">
-                  总分合计
-                  <br />（总共100分）
+                  <b>总分合计
+                  <br />（总分100）</b>
                   <div class="txt-1">
                     {{ ruleForm.scoreSum ? ruleForm.scoreSum : "0" }}
                   </div>
@@ -265,9 +303,13 @@
 
 <script>
 import Cookies from "js-cookie";
+// import Slideout from 'vue-slideout';
 import { saveEvaluate } from "@/api/index";
 export default {
   name: "detail",
+  // components: {
+  //   Slideout
+  // },
   data() {
     return {
       nowData: "",
@@ -339,11 +381,26 @@ export default {
         ],
       },
       illness: JSON.parse(Cookies.get("illness")),
+      fileType: '', // 附件文件类型
+      slides: [
+        { type: 'ppt', url: '' }
+      ]
     };
   },
   watch: {},
   created() {
-    console.log("illness::" + this.illness);
+    console.log("illness::", this.illness.illnessCase.videoAddress);
+    let filePath = this.illness.illnessCase.videoAddress
+    var index= filePath.lastIndexOf(".");
+    //获取后缀
+    this.fileType = filePath.substr(index+1)
+    if (this.fileType === 'ppt' || this.fileType === 'pptx') {
+      // let routeUrl = this.illness.illnessCase.videoAddress
+      // let url = encodeURIComponent(routeUrl)
+      // let officeUrl = 'http://view.officeapps.live.com/op/view.aspx?src='+url
+      // window.open(officeUrl,'_target')
+    }
+    console.log(this.slides)
     this.nowData = Date.parse(new Date());
     if (this.illness.illnessEvaluate.scoreSum) {
       this.ruleForm = this.illness.illnessEvaluate;

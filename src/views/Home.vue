@@ -74,44 +74,50 @@ export default {
     return {
       illnessList: [], //列表
       newIllnessList: [],
+      showIllnessList:true
     };
   },
   created() {
     this._getviewIllnessList();
-  },
-  methods: {
-    // 获取列表
-    _getviewIllnessList() {
-      viewIllnessList().then((res) => {
-        if (res.code == 200) {
-          this.$alert(
-            "尊敬的专家，感谢您拨冗担任首届Ormco“全民新show”病例巡回展评委！评阅病例前请务必阅读“评审须知”。<br/>注意，必须所有病例评完后，才能点“提交审核结果”（上海场截止时间：2022年03月06日24时）",
-            "",
-            {
-              confirmButtonText: "确定",
-              dangerouslyUseHTMLString: true,
-              callback: () => {
-                this.$alert(
-                  "1.请遵守保密原则，勿对外公开病例资料内容及评审结果，否则可能需承担相应法律后果。<br>2.请浏览完整病例幻灯片后，给出各分项评分，系统自动总分。<br>3.在您评审的全部病例中，最终获得“重点推荐（A类）”的病例占比请务必控制在40%左右。<br>4.请您给出具体的点评意见，对选手帮助很大。<br>5.单个病例评审完成后，可以点击“保存”，保存评审结果，但不会提交给系统；全部病例评审完成并确认无误后，方可点击“提交评审结果”，提交后不可退回修改。",
+    if (!localStorage.getItem('showIllnessList')) {
+      this.showIllnessList = false
+      localStorage.setItem('showIllnessList',this.showIllnessList)
+      this.$alert(
+          "尊敬的专家，感谢您担任第三届Ormco百强病例大赛的评委！评阅病例前请务必阅读“评审须知”。<br/>注意，必须所有病例评完后，才能点“提交审核结果”（截止时间：2023年03月7日24时）",
+          "",
+          {
+            confirmButtonText: "确定",
+            dangerouslyUseHTMLString: true,
+            callback: () => {
+              this.$alert(
+                  "1.请遵守保密原则，勿对外公开病例资料内容及评审结果，否则可能需承担相应法律后果。<br>2.请浏览完整病例幻灯片后，给出各分项评分，系统自动总分。<br>3.在您评审的全部病例中，最终获得“重点推荐（A类）”的病例占比请务必控制在30%左右。<br>4.请您给出具体的点评意见，对选手帮助很大。<br>5.单个病例评审完成后，可以点击“保存”，保存评审结果，但不会提交给系统；全部病例评审完成并确认无误后，方可点击“提交评审结果”，提交后不可退回修改。",
                   "评审须知",
                   {
                     confirmButtonText: "确定",
                     dangerouslyUseHTMLString: true,
-                    callback: () => {
-                      this.$alert(
-                        "特别提醒：某病例若最终入围“优秀病例”，将随机抽取该病例评价为“A”的评委评语在线公布，故请尤其注意您给“A”的病例评语是否恰当。",
-                        "特别提醒",
-                        {
-                          confirmButtonText: "确定",
-                          dangerouslyUseHTMLString: true,
-                        }
-                      );
-                    },
+                    // callback: () => {
+                    //   this.$alert(
+                    //     "特别提醒：某病例若最终入围“优秀病例”，将随机抽取该病例评价为“A”的评委评语在线公布，故请尤其注意您给“A”的病例评语是否恰当。",
+                    //     "特别提醒",
+                    //     {
+                    //       confirmButtonText: "确定",
+                    //       dangerouslyUseHTMLString: true,
+                    //     }
+                    //   );
+                    // },
                   }
-                );
-              },
-            }
-          );
+              );
+            },
+          }
+      );
+    }
+  },
+  methods: {
+    // 获取列表
+    _getviewIllnessList() {
+
+      viewIllnessList().then((res) => {
+        if (res.code == 200) {
           this.illnessList = res.data;
           res.data.forEach((item) => {
             this.newIllnessList.push(item.illnessEvaluate);
